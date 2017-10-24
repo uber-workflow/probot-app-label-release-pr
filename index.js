@@ -111,7 +111,7 @@ async function setStatus(context, {state, description}) {
       state,
       description,
       sha: context.payload.pull_request.head.sha,
-      context: 'Release label',
+      context: 'probot/label-release-pr',
     }),
   );
 }
