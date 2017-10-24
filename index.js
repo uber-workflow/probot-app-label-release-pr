@@ -67,23 +67,24 @@ module.exports = robot => {
     }
 
     const version = await isRelease();
-
+    // console.log('dang', version);
     if (version) {
       const titleVersion = parseTitle(pr.title);
-      if (!titleVersion || titleVersion.version !== version) {
+      // console.log('QQQ', titleVersion);
+      if (!titleVersion || titleVersion.version !== `v${version}`) {
         return setStatus(context, {
           state: 'failure',
           description: 'Detected release PR, but invalid PR title',
         });
       }
-      const res = await github.issues.addLabels(
+      await context.github.issues.addLabels(
         context.issue({
           labels: ['release'],
         }),
       );
     } else {
       try {
-        const res = await github.issues.deleteLabel(
+        await context.github.issues.deleteLabel(
           context.issue({
             name: 'release',
           }),
