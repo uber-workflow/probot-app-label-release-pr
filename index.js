@@ -68,10 +68,8 @@ module.exports = robot => {
     }
 
     const version = await isRelease();
-    // console.log('dang', version);
     if (version) {
       const titleVersion = parseTitle(pr.title);
-      // console.log('QQQ', titleVersion);
       if (!titleVersion || titleVersion.version !== `v${version}`) {
         return setStatus(context, {
           state: 'failure',
@@ -85,7 +83,7 @@ module.exports = robot => {
       );
     } else {
       try {
-        await context.github.issues.deleteLabel(
+        await context.github.issues.removeLabel(
           context.issue({
             name: 'release',
           }),
